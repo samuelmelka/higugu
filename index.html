@@ -113,10 +113,9 @@
     </div>
   </div>
 
-  <!-- AUDIO (works after click) -->
-  <audio id="music" preload="auto">
-    <source src="music.mp3" type="audio/mpeg">
-  </audio>
+<audio id="music" preload="auto">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
 
   <script>
     const noBtn = document.getElementById("no");
@@ -144,8 +143,21 @@
     noBtn.addEventListener("mouseover", moveNoButton);
 
     yesBtn.addEventListener("click", () => {
-      // Play music (browser-approved)
-      music.play();
+  // Start music FIRST
+  music.currentTime = 0;
+  music.play();
+
+  // Effects
+  for (let i = 0; i < 80; i++) createEffect();
+
+  // Delay DOM replacement so browser keeps audio alive
+  setTimeout(() => {
+    document.querySelector(".container").innerHTML = `
+      <h1>YAYYYYY 🐶🎉</h1>
+      <img class="dog" src="happy.png" alt="Happy Puppy">
+    `;
+  }, 400); // <-- THIS delay is the magic
+});
 
       // Switch to HAPPY DOG
       dogImage.src = "happy.png";
